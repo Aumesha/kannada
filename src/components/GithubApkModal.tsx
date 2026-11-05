@@ -21,7 +21,7 @@ permissions:
 
 jobs:
   build-apk:
-    name: Build Android APK with Capacitor
+    name: Build Android APK with Capacitor (Java 21)
     runs-on: ubuntu-latest
     env:
       ANDROID_HOME: /usr/local/lib/android/sdk
@@ -36,11 +36,17 @@ jobs:
         with:
           node-version: 20
 
-      - name: Setup Java JDK 17
+      - name: Setup Java JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
+
+      - name: Verify Java 21 Environment
+        run: |
+          java -version
+          javac -version
+          echo "JAVA_HOME=$JAVA_HOME"
 
       - name: Accept Android SDK Licenses
         run: |
@@ -56,13 +62,12 @@ jobs:
 
       - name: Setup Capacitor for Android
         run: |
-          npm install @capacitor/core @capacitor/cli @capacitor/android --save --legacy-peer-deps
           if [ ! -d "android" ]; then
             npx cap add android
           fi
           npx cap sync android
 
-      - name: Ensure Android Permissions in AndroidManifest.xml
+      - name: Ensure Microphone Permissions in AndroidManifest.xml
         run: |
           MANIFEST="android/app/src/main/AndroidManifest.xml"
           if [ -f "$MANIFEST" ]; then
@@ -71,8 +76,10 @@ jobs:
             fi
           fi
 
-      - name: Build Debug APK with Gradle
+      - name: Build Debug APK with Gradle (Java 21)
         working-directory: android
+        env:
+          JAVA_HOME: \${{ env.JAVA_HOME }}
         run: |
           chmod +x ./gradlew
           ./gradlew assembleDebug --stacktrace --no-daemon
