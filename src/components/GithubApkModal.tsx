@@ -32,7 +32,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
 
       - name: Setup Java JDK 17
         uses: actions/setup-java@v4
@@ -53,18 +52,18 @@ jobs:
 
       - name: Setup Capacitor for Android
         run: |
-          npm install @capacitor/core @capacitor/cli @capacitor/android --save
+          npm install @capacitor/core @capacitor/cli @capacitor/android --save --legacy-peer-deps
           if [ ! -d "android" ]; then
             npx cap add android
           fi
           npx cap sync android
 
-      - name: Ensure Android Permissions
+      - name: Ensure Android Permissions in AndroidManifest.xml
         run: |
           MANIFEST="android/app/src/main/AndroidManifest.xml"
           if [ -f "$MANIFEST" ]; then
             if ! grep -q "RECORD_AUDIO" "$MANIFEST"; then
-              sed -i '/<application/i \\    <uses-permission android:name="android.permission.RECORD_AUDIO" />\\n    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />' "$MANIFEST"
+              sed -i '/<manifest/a \\    <uses-permission android:name="android.permission.RECORD_AUDIO" />\\n    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />' "$MANIFEST"
             fi
           fi
 
@@ -78,7 +77,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: CrystalVoice-Android-APK
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: android/app/build/outputs/apk/debug/*.apk
           retention-days: 30
 `;
 
