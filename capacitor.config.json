@@ -1,6 +1,6 @@
 {
   "appId": "com.crystalvoice.studio",
-  "appName": "ಧ್ವನಿ ಸ್ಪಷ್ಟ",
+  "appName": "CrystalVoice",
   "webDir": "dist",
   "bundledWebRuntime": false,
   "server": {
