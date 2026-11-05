@@ -1,0 +1,6 @@
+{
+  "name": "ಧ್ವನಿ ಸ್ಪಷ್ಟ - CrystalVoice Offline Studio",
+  "description": "ಆಫ್‌ಲೈನ್ ಮೊಬೈಲ್ ವಾಯ್ಸ್ ರೆಕಾರ್ಡರ್: ಅತ್ಯುತ್ತಮ ಬ್ಯಾಕ್‌ಗ್ರೌಂಡ್ ನಾಯ್ಸ್ ಫಿಲ್ಟರ್, ಆ್ಯಪ್ ಆಂತರಿಕ ಸುರಕ್ಷಿತ ಸ್ಟೋರೇಜ್ ಮತ್ತು GitHub APK ವರ್ಕ್‌ಫ್ಲೋ.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
